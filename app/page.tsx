@@ -1,3 +1,8 @@
+"use client"
+
+// importing hooks
+import { useState } from "react";
+
 // importing images
 import Image from "next/image";
 import reactIcon from "@/public/react-icon-large.png";
@@ -7,10 +12,20 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function Home() {
+
+  let [darkMode, setDarkMode] = useState(true);
+
+  function toggleDarkMode() {
+    setDarkMode(!darkMode);
+  }
+
   return (
-    <main className="relative bg-[#282D35] h-screen">
-      <Navbar />
-      <div className="text-white w-max py-14 px-10">
+    <main className={`relative ${darkMode ? 'bg-[#282D35] text-white' : 'bg-white text-black'} h-screen`}>
+      <Navbar
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
+      />
+      <div className="w-max py-14 px-10">
         <Image className="absolute right-0 top-[33%]" src={reactIcon} alt="React icon" />
         <h1 className="font-bold text-5xl mb-6">Fun facts about React</h1>
         <ul className="mx-16 list-disc max-w-[25rem]">
@@ -21,7 +36,9 @@ export default function Home() {
           <li className="py-2 marker:text-[#61DAFB] marker:text-2xl">Powers thousands of enterprise apps, including mobile apps</li>
         </ul>
       </div>
-      <Footer />
+      <Footer
+        darkMode={darkMode}
+      />
     </main>
   );
 }
